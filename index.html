@@ -833,7 +833,7 @@
                         <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="currentColor"/>
                         <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="currentColor"/>
                     </svg>
-                    Entrar com Google
+                    Acessar Agora
                 </a>
             </nav>
         </div>
@@ -1046,7 +1046,7 @@
                     <div class="plan-name">Pro</div>
                     <div class="plan-subtitle">Ideal para quem está começando e quer validar a ideia.</div>
                     <div class="plan-price">R$83<span class="period">/mês</span></div>
-                    <div class="plan-total">total de R$ 997,00</div>
+                    <div class="plan-total">ou R$ 997 à vista</div>
                     <ul class="plan-features">
                         <li>1 Assistente FacilChat</li>
                         <li>Upload de até 3 arquivos</li>
@@ -1059,7 +1059,7 @@
                     <div class="plan-name">Elite</div>
                     <div class="plan-subtitle">Para empresas que precisam de mais volume e funcionalidades.</div>
                     <div class="plan-price">R$141<span class="period">/mês</span></div>
-                    <div class="plan-total">total de R$ 1.697,00</div>
+                    <div class="plan-total">ou R$ 1.697 à vista</div>
                     <ul class="plan-features">
                         <li>Até 3 Assistentes FacilChat</li>
                         <li>Upload de até 10 arquivos</li>
@@ -1191,8 +1191,8 @@
                 buttons[1].classList.add('active');
                 prices[0].innerHTML = 'R$83<span class="period">/mês</span>';
                 prices[1].innerHTML = 'R$141<span class="period">/mês</span>';
-                totals[0].textContent = 'total de R$ 997,00';
-                totals[1].textContent = 'total de R$ 1.697,00';
+                totals[0].textContent = 'ou R$ 997 à vista';
+                totals[1].textContent = 'ou R$ 1.697 à vista';
                 isAnnual = true;
             } else {
                 buttons[0].classList.add('active');
@@ -1342,9 +1342,7 @@
             typeWriter(heroTitle, originalText, 20);
         });
     </script>
-
-    <script src="https://www.gstatic.com/firebasejs/9.6.7/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.7/firebase-auth-compat.js"></script>
+    
     <script src="landing.js"></script>
         
 </body>
