@@ -37,6 +37,62 @@
             border-bottom: 1px solid rgba(139, 92, 246, 0.2);
         }
 
+        .trust-section {
+            background: #0a0a1a;
+            padding: 80px 0;
+            border-top: 1px solid rgba(139, 92, 246, 0.1);
+        }
+
+        .trust-content {
+            display: flex;
+            align-items: center;
+            gap: 60px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .trust-icon {
+            flex-shrink: 0;
+            color: #8b5cf6;
+        }
+
+        .trust-icon svg {
+            width: 80px;
+            height: 80px;
+        }
+
+        .trust-text h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 30px;
+            color: #fff;
+        }
+
+        .trust-points {
+            display: grid;
+            gap: 25px;
+        }
+
+        .trust-point h4 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #e2e8f0;
+        }
+
+        .trust-point p {
+            color: #94a3b8;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 768px) {
+            .trust-content {
+                flex-direction: column;
+                text-align: center;
+                gap: 30px;
+            }
+        }
+
         .nav {
             display: flex;
             justify-content: space-between;
@@ -818,6 +874,34 @@
                 font-size: 2.5rem;
             }
         }
+
+    .stat-highlight {
+        background: rgba(255, 255, 255, 0.05);
+        border-left: 4px solid #8b5cf6;
+        padding: 25px 30px;
+        border-radius: 10px;
+        margin: 40px auto;
+        max-width: 700px;
+    }
+
+    .stat-highlight p {
+        font-size: 1.2rem !important; /* !important para garantir a sobreposição */
+        color: #e2e8f0 !important;
+        line-height: 1.7 !important;
+        margin-bottom: 0 !important;
+    }
+
+    .stat-highlight strong {
+        color: #a78bfa;
+        font-weight: 700;
+    }
+
+    .solution-text {
+        font-size: 1.2rem;
+        color: #e2e8f0;
+        margin-bottom: 40px;
+        line-height: 1.7;
+    }        
     </style>
 </head>
 <body>
@@ -862,6 +946,30 @@
             </div>
         </div>
     </section>
+
+    <!-- How it Works -->
+    <section class="how-it-works" id="how-it-works">
+        <div class="container">
+            <h2 class="section-title">Tão fácil que parece mágica.<br>Comece em 3 passos simples.</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Treine seu Assistente</h3>
+                    <p>Dê um nome e personalidade ao seu bot. Alimente-o com as informações do seu negócio: cole textos, envie PDFs (cardápios, catálogos) ou adicione perguntas e respostas frequentes.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Conecte ao seu WhatsApp</h3>
+                    <p>Abra seu WhatsApp, escaneie o QR Code gerado na nossa plataforma e pronto. A conexão é segura e leva menos de 30 segundos. Funciona com seu número atual!</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Venda e Atenda no Automático</h3>
+                    <p>Veja seu novo assistente atender clientes, tirar dúvidas e coletar contatos de interessados, enquanto você foca no que realmente importa: fazer seu negócio crescer.</p>
+                </div>
+            </div>
+        </div>
+    </section>    
 
     <!-- Problems Section -->
     <section class="problems">
@@ -908,45 +1016,10 @@
         </div>
     </section>
 
-    <!-- Solution Section -->
-    <section class="solution">
-        <div class="container">
-            <h2 class="section-title">Chega de perder tempo e dinheiro.<br>O FacilChat é a sua solução.</h2>
-            <div class="solution-content">
-                <p>Imagine ter um funcionário dedicado, treinado com as informações da sua empresa, trabalhando incansavelmente no seu WhatsApp. Ele responde instantaneamente, nunca se cansa e garante que nenhuma oportunidade seja perdida. Isso é o FacilChat.</p>
-                <a href="#how-it-works" class="cta-secondary">Ver como funciona</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- How it Works -->
-    <section class="how-it-works" id="how-it-works">
-        <div class="container">
-            <h2 class="section-title">Tão fácil que parece mágica.<br>Comece em 3 passos simples.</h2>
-            <div class="steps">
-                <div class="step">
-                    <div class="step-number">1</div>
-                    <h3>Treine seu Assistente</h3>
-                    <p>Dê um nome e personalidade ao seu bot. Alimente-o com as informações do seu negócio: cole textos, envie PDFs (cardápios, catálogos) ou adicione perguntas e respostas frequentes.</p>
-                </div>
-                <div class="step">
-                    <div class="step-number">2</div>
-                    <h3>Conecte ao seu WhatsApp</h3>
-                    <p>Abra seu WhatsApp, escaneie o QR Code gerado na nossa plataforma e pronto. A conexão é segura e leva menos de 30 segundos. Funciona com seu número atual!</p>
-                </div>
-                <div class="step">
-                    <div class="step-number">3</div>
-                    <h3>Venda e Atenda no Automático</h3>
-                    <p>Veja seu novo assistente atender clientes, tirar dúvidas e coletar contatos de interessados, enquanto você foca no que realmente importa: fazer seu negócio crescer.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- Features Section -->
     <section class="features">
         <div class="container">
-            <h2 class="section-title">Ferramentas poderosas, resultados incríveis.</h2>
+            <h2 class="section-title">Feito por quem se preocupa com seu atendimento,<br>de verdade.</h2>
             <div class="features-grid">
                 <div class="feature-card">
                     <div class="feature-icon">
@@ -1142,14 +1215,46 @@
         </div>
     </section>
 
-
-
-    <!-- Final CTA -->
-    <section class="final-cta">
+    <section class="solution">
         <div class="container">
-            <h2>Pare de deixar dinheiro na mesa.</h2>
-            <p>Automatize seu atendimento hoje mesmo e veja suas vendas e a satisfação dos seus clientes decolarem.</p>
-            <a href="#pricing" class="final-cta-btn">Quero meu assistente virtual grátis</a>
+            <h2 class="section-title">No digital, a velocidade define o vencedor.</h2>
+            <div class="solution-content">
+                
+                <div class="stat-highlight">
+                    <p>Estudos de mercado mostram que empresas que respondem a um novo lead <strong>nos primeiros 5 minutos</strong> têm até <strong>9x mais chances</strong> de convertê-lo em cliente.</p>
+                </div>
+
+                <p class="solution-text">
+                    Enquanto você digita, seu concorrente com atendimento automático já qualificou o lead, enviou o catálogo e fechou a venda.
+                </p>
+
+                <a href="#how-it-works" class="cta-secondary">Descubra como ser o mais rápido</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="trust-section">
+        <div class="container">
+            <div class="trust-content">
+                <div class="trust-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.286zm0 13.036h.008v.008H12v-.008z" />
+                    </svg>
+                </div>
+                <div class="trust-text">
+                    <h2>Construído sobre Confiança e Tecnologia</h2>
+                    <div class="trust-points">
+                        <div class="trust-point">
+                            <h4>Arquitetura Focada em Privacidade</h4>
+                            <p>O FacilChat atua como uma ponte segura. Suas conversas são processadas em tempo real e <strong>nunca são armazenadas em nossos servidores.</strong> A criptografia de ponta a ponta do WhatsApp permanece intacta.</p>
+                        </div>
+                        <div class="trust-point">
+                            <h4>Uso Consciente da Plataforma</h4>
+                            <p>Nossa ferramenta foi criada para otimizar o atendimento. A responsabilidade pelo uso ético, envio de mensagens e conformidade com as políticas do WhatsApp permanece sempre com o proprietário do número.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
