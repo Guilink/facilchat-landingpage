@@ -1,0 +1,1351 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FacilChat - Assistente Virtual para WhatsApp</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: #fff;
+            background: #0f0f23;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(15, 15, 35, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(139, 92, 246, 0.2);
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #8b5cf6, #a855f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .cta-header {
+            background: linear-gradient(135deg, #8b5cf6, #a855f7);
+            padding: 12px 20px;
+            border-radius: 50px;
+            text-decoration: none;
+            color: white;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(139, 92, 246, 0.3);
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+        }
+
+        .cta-header:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(139, 92, 246, 0.4);
+        }
+
+        /* Promotion Bar */
+        .promo-bar {
+            background: linear-gradient(135deg, #8b5cf6, #a855f7);
+            padding: 10px 0;
+            text-align: center;
+            margin-top: 80px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+
+        .promo-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .promo-btn {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 6px 16px;
+            border-radius: 25px;
+            text-decoration: none;
+            color: white;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .promo-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #0f0f23 0%, #1e1b4b 50%, #312e81 100%);
+            padding: 100px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 50% 50%, rgba(139, 92, 246, 0.1) 0%, transparent 70%);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            line-height: 1.1;
+            background: linear-gradient(135deg, #fff, #e0e7ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 40px;
+            color: #cbd5e1;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.6;
+        }
+
+        .cta-primary {
+            background: linear-gradient(135deg, #8b5cf6, #a855f7);
+            padding: 18px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            color: white;
+            font-size: 1.2rem;
+            font-weight: 700;
+            display: inline-block;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 30px rgba(139, 92, 246, 0.4);
+        }
+
+        .cta-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 40px rgba(139, 92, 246, 0.5);
+        }
+
+        .trial-info {
+            color: #94a3b8;
+            margin-top: 15px;
+        }
+
+        /* Icon Styling */
+        .icon {
+            width: 24px;
+            height: 24px;
+            fill: currentColor;
+        }
+
+        /* Problem Section */
+        .problems {
+            padding: 100px 0;
+            background: #0f0f23;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 60px;
+            color: #fff;
+        }
+
+        .problems-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        @media (max-width: 768px) {
+            .problems-grid {
+                grid-template-columns: 1fr;
+                max-width: 400px;
+            }
+        }
+
+        .problem-card {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(168, 85, 247, 0.1));
+            padding: 40px 30px;
+            border-radius: 20px;
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .problem-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(139, 92, 246, 0.4);
+        }
+
+        .problem-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            box-shadow: 0 8px 25px rgba(239, 68, 68, 0.3);
+        }
+
+        .problem-icon .icon {
+            width: 28px;
+            height: 28px;
+            fill: white;
+        }
+
+        .problem-card h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #fff;
+        }
+
+        .problem-card p {
+            color: #cbd5e1;
+            line-height: 1.6;
+        }
+
+        /* Solution Section */
+        .solution {
+            padding: 100px 0;
+            background: linear-gradient(135deg, #1e1b4b, #312e81);
+            text-align: center;
+        }
+
+        .solution-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .solution p {
+            font-size: 1.2rem;
+            color: #e2e8f0;
+            margin-bottom: 40px;
+            line-height: 1.7;
+        }
+
+        .cta-secondary {
+            background: transparent;
+            border: 2px solid #8b5cf6;
+            padding: 15px 35px;
+            border-radius: 50px;
+            text-decoration: none;
+            color: #8b5cf6;
+            font-weight: 600;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+
+        .cta-secondary:hover {
+            background: #8b5cf6;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* How it Works */
+        .how-it-works {
+            padding: 100px 0;
+            background: #0f0f23;
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 60px;
+            margin-top: 60px;
+            max-width: 1100px;
+            margin: 60px auto 0 auto;
+        }
+
+        @media (max-width: 1024px) {
+            .steps {
+                grid-template-columns: 1fr;
+                max-width: 400px;
+                gap: 40px;
+            }
+        }
+
+        .step {
+            text-align: center;
+            position: relative;
+        }
+
+        .step-number {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            border-radius: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: 800;
+            margin: 0 auto 30px;
+            color: white;
+            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.4);
+        }
+
+        .step h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+
+        .step p {
+            color: #cbd5e1;
+            line-height: 1.6;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 100px 0;
+            background: linear-gradient(135deg, #1e1b4b, #0f0f23);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+            margin-top: 60px;
+            max-width: 1000px;
+            margin: 60px auto 0 auto;
+        }
+
+        @media (max-width: 1024px) {
+            .features-grid {
+                grid-template-columns: 1fr;
+                max-width: 500px;
+            }
+        }
+
+        .feature-card {
+            background: rgba(139, 92, 246, 0.05);
+            padding: 40px 30px;
+            border-radius: 20px;
+            border: 1px solid rgba(139, 92, 246, 0.1);
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .feature-card:hover {
+            background: rgba(139, 92, 246, 0.1);
+            border-color: rgba(139, 92, 246, 0.3);
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.3);
+        }
+
+        .feature-icon .icon {
+            width: 28px;
+            height: 28px;
+            fill: white;
+        }
+
+        .feature-card h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #fff;
+        }
+
+        .feature-card p {
+            color: #cbd5e1;
+            line-height: 1.6;
+        }
+
+        /* Use Cases */
+        .use-cases {
+            padding: 100px 0;
+            background: #0f0f23;
+        }
+
+        .use-cases-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+            margin-top: 60px;
+            max-width: 900px;
+            margin: 60px auto 0 auto;
+        }
+
+        @media (max-width: 768px) {
+            .use-cases-grid {
+                grid-template-columns: 1fr;
+                max-width: 400px;
+                margin: 60px auto 0 auto;
+            }
+        }
+
+        .use-case {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(168, 85, 247, 0.05));
+            padding: 40px 30px;
+            border-radius: 20px;
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .use-case:hover {
+            transform: translateY(-10px);
+            border-color: rgba(139, 92, 246, 0.4);
+        }
+
+        .use-case h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #8b5cf6;
+        }
+
+        .use-case p {
+            color: #cbd5e1;
+            line-height: 1.6;
+        }
+
+        /* Pricing Section - Completamente reorganizada */
+        .pricing {
+            padding: 100px 0;
+            background: linear-gradient(135deg, #0f0f23, #1e1b4b);
+            position: relative;
+        }
+
+        .pricing::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 30% 70%, rgba(139, 92, 246, 0.05) 0%, transparent 50%);
+        }
+
+        .pricing .container {
+            position: relative;
+            z-index: 2;
+        }
+
+        .pricing-toggle {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .pricing-toggle p {
+            color: #cbd5e1;
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+
+        .toggle-container {
+            display: inline-flex;
+            background: rgba(139, 92, 246, 0.1);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 50px;
+            padding: 8px;
+            margin: 20px 0;
+        }
+
+        .toggle-option {
+            padding: 12px 30px;
+            border-radius: 50px;
+            background: transparent;
+            border: none;
+            color: #cbd5e1;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .toggle-option.active {
+            background: linear-gradient(135deg, #8b5cf6, #a855f7);
+            color: white;
+            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.4);
+        }
+
+        .pricing-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        @media (max-width: 1024px) {
+            .pricing-cards {
+                grid-template-columns: 1fr;
+                max-width: 400px;
+            }
+        }
+
+        .pricing-card {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.08), rgba(168, 85, 247, 0.05));
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            border-radius: 20px;
+            padding: 40px 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            backdrop-filter: blur(10px);
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(139, 92, 246, 0.4);
+            box-shadow: 0 20px 40px rgba(139, 92, 246, 0.15);
+        }
+
+        .pricing-card.popular {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.15), rgba(168, 85, 247, 0.1));
+            border-color: #8b5cf6;
+            transform: scale(1.05);
+            box-shadow: 0 20px 40px rgba(139, 92, 246, 0.2);
+        }
+
+        .pricing-card.popular:hover {
+            transform: scale(1.05) translateY(-10px);
+        }
+
+        .popular-badge {
+            position: absolute;
+            top: -15px;
+            right: 20px;
+            background: linear-gradient(135deg, #8b5cf6, #a855f7);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.4);
+        }
+
+        .plan-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+
+        .plan-subtitle {
+            color: #94a3b8;
+            font-size: 0.95rem;
+            margin-bottom: 25px;
+            line-height: 1.4;
+            min-height: 40px;
+        }
+
+        .plan-price {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #8b5cf6;
+            margin-bottom: 10px;
+            min-height: 72px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .empresarial .plan-price {
+            font-size: 1.8rem;
+        }
+
+        .plan-price .period {
+            font-size: 1rem;
+            color: #94a3b8;
+            font-weight: 500;
+        }
+
+        .plan-total {
+            color: #64748b;
+            font-size: 0.85rem;
+            margin-bottom: 25px;
+            min-height: 20px;
+        }
+
+        .plan-features {
+            list-style: none;
+            padding: 0;
+            margin: 25px 0;
+            text-align: left;
+        }
+
+        .plan-features li {
+            padding: 8px 0;
+            color: #e2e8f0;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .plan-features li::before {
+            content: '✓';
+            color: #10b981;
+            font-weight: bold;
+            font-size: 1.1rem;
+            flex-shrink: 0;
+        }
+
+        .pricing-cta {
+            width: 100%;
+            background: linear-gradient(135deg, #8b5cf6, #a855f7);
+            border: none;
+            padding: 15px;
+            border-radius: 50px;
+            color: white;
+            font-weight: 600;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+        }
+
+        .pricing-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(139, 92, 246, 0.4);
+        }
+
+        .pricing-card.empresarial .pricing-cta {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+        }
+
+        .pricing-card.empresarial .pricing-cta:hover {
+            box-shadow: 0 8px 30px rgba(59, 130, 246, 0.4);
+        }
+
+        /* FAQ */
+        .faq {
+            padding: 100px 0;
+            background: #0f0f23;
+        }
+
+        .faq-list {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            background: rgba(139, 92, 246, 0.05);
+            margin-bottom: 20px;
+            border-radius: 15px;
+            border: 1px solid rgba(139, 92, 246, 0.1);
+            overflow: hidden;
+        }
+
+        .faq-question {
+            padding: 25px 30px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 1.1rem;
+            font-weight: 600;
+            width: 100%;
+            text-align: left;
+            transition: all 0.3s ease;
+        }
+
+        .faq-question:hover {
+            background: rgba(139, 92, 246, 0.1);
+        }
+
+        .faq-answer {
+            padding: 0 30px 25px;
+            color: #cbd5e1;
+            line-height: 1.6;
+            display: none;
+        }
+
+        .faq-answer.active {
+            display: block;
+        }
+
+        .faq-toggle {
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item.active .faq-toggle {
+            transform: rotate(45deg);
+        }
+
+        /* Final CTA */
+        .final-cta {
+            padding: 100px 0;
+            background: linear-gradient(135deg, #8b5cf6, #a855f7);
+            text-align: center;
+        }
+
+        .final-cta h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+        }
+
+        .final-cta p {
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+            opacity: 0.9;
+        }
+
+        .final-cta-btn {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            padding: 18px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            color: white;
+            font-size: 1.2rem;
+            font-weight: 700;
+            display: inline-block;
+            transition: all 0.3s ease;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .final-cta-btn:hover {
+            background: white;
+            color: #8b5cf6;
+            transform: translateY(-3px);
+        }
+
+        /* Footer */
+        .footer {
+            background: #0a0a1a;
+            padding: 40px 0;
+            text-align: center;
+            border-top: 1px solid rgba(139, 92, 246, 0.2);
+        }
+
+        .footer p {
+            color: #64748b;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .container {
+                padding: 0 15px;
+            }
+            
+            .pricing-card.popular {
+                transform: none;
+            }
+
+            .pricing-card.popular:hover {
+                transform: translateY(-10px);
+            }
+            
+            .promo-content {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .plan-price {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <nav class="nav">
+                <div class="logo">FacilChat</div>
+                <a href="#" id="login-btn" class="cta-header">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="margin-right: 8px;">
+                        <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="currentColor"/>
+                        <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="currentColor"/>
+                        <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="currentColor"/>
+                        <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="currentColor"/>
+                    </svg>
+                    Entrar com Google
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Promotion Bar -->
+    <div class="promo-bar">
+        <div class="container">
+            <div class="promo-content">
+                <span>🔥 Você ganhou 3 dias grátis!</span>
+                <a href="#pricing" class="promo-btn">APROVEITE AGORA!</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Seu WhatsApp vive lotado? Contrate um assistente virtual em 5 minutos.</h1>
+                <p>Crie um chatbot com Inteligência Artificial que responde clientes, qualifica leads e vende por você no WhatsApp, 24 horas por dia. Sem precisar de programadores.</p>
+                <a href="#pricing" class="cta-primary">Crie seu assistente grátis agora</a>
+                <div class="trial-info">Teste gratuito por 3 dias. Não precisa de cartão de crédito.</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Problems Section -->
+    <section class="problems">
+        <div class="container">
+            <h2 class="section-title">Você se identifica com algum destes problemas?</h2>
+            <div class="problems-grid">
+                <div class="problem-card">
+                    <div class="problem-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <h3>Perda de Vendas</h3>
+                    <p>Clientes interessados ficam sem resposta e acabam comprando do concorrente.</p>
+                </div>
+                <div class="problem-card">
+                    <div class="problem-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <h3>Atendimento Lento</h3>
+                    <p>Você ou sua equipe demoram horas para responder um grande volume de mensagens.</p>
+                </div>
+                <div class="problem-card">
+                    <div class="problem-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <h3>Perguntas Repetitivas</h3>
+                    <p>Perde-se um tempo precioso respondendo as mesmas dúvidas todos os dias (preço, horário, localização, etc).</p>
+                </div>
+                <div class="problem-card">
+                    <div class="problem-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <h3>Sem Atendimento 24/7</h3>
+                    <p>O negócio "fecha" quando você vai dormir, perdendo contatos feitos de madrugada ou fora do horário comercial.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Solution Section -->
+    <section class="solution">
+        <div class="container">
+            <h2 class="section-title">Chega de perder tempo e dinheiro. O FacilChat é a sua solução.</h2>
+            <div class="solution-content">
+                <p>Imagine ter um funcionário dedicado, treinado com as informações da sua empresa, trabalhando incansavelmente no seu WhatsApp. Ele responde instantaneamente, nunca se cansa e garante que nenhuma oportunidade seja perdida. Isso é o FacilChat.</p>
+                <a href="#how-it-works" class="cta-secondary">Ver como funciona</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- How it Works -->
+    <section class="how-it-works" id="how-it-works">
+        <div class="container">
+            <h2 class="section-title">Tão fácil que parece mágica. Comece em 3 passos simples.</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Treine seu Assistente</h3>
+                    <p>Dê um nome e personalidade ao seu bot. Alimente-o com as informações do seu negócio: cole textos, envie PDFs (cardápios, catálogos) ou adicione perguntas e respostas frequentes.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Conecte ao seu WhatsApp</h3>
+                    <p>Abra seu WhatsApp, escaneie o QR Code gerado na nossa plataforma e pronto. A conexão é segura e leva menos de 30 segundos. Funciona com seu número atual!</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Venda e Atenda no Automático</h3>
+                    <p>Veja seu novo assistente atender clientes, tirar dúvidas e coletar contatos de interessados, enquanto você foca no que realmente importa: fazer seu negócio crescer.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <h2 class="section-title">Ferramentas poderosas, resultados incríveis.</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M13 10V3L4 14h7v7l9-11h-7z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <h3>Inteligência Artificial de Ponta</h3>
+                    <p>Usamos os modelos de IA mais avançados (Claude 3.5 da Anthropic e Whisper da OpenAI) para garantir respostas que parecem humanas, entendendo textos e até mensagens de áudio.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <h3>Base de Conhecimento Flexível</h3>
+                    <p>Seu bot, suas regras. Ensine-o enviando arquivos PDF, JPG, PNG ou simplesmente colando as instruções, produtos e serviços. Ele aprende na hora.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M15.182 15.182a4.5 4.5 0 01-6.364 0M21 12a9 9 0 11-18 0 9 9 0 0118 0zM9.75 9.75c0 .414-.168.75-.375.75S9 10.164 9 9.75 9.168 9 9.375 9s.375.336.375.75zm-.375 0h.008v.015h-.008V9.75zm5.625 0c0 .414-.168.75-.375.75s-.375-.336-.375-.75.168-.75.375-.75.375.336.375.75zm-.375 0h.008v.015h-.008V9.75z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <h3>Personalidade Única</h3>
+                    <p>Defina se seu bot será amigável, profissional ou engraçado. Dê a ele a cara da sua marca e crie uma experiência única para seus clientes.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" stroke="currentColor" stroke-width="1.5"/>
+                            <path d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" stroke="currentColor" stroke-width="1.5"/>
+                        </svg>
+                    </div>
+                    <h3>Captura de Leads Automática</h3>
+                    <p>Ative a coleta de leads e nosso bot perguntará a todo novo contato como ele encontrou sua empresa, gerando uma lista valiosa de clientes em potencial para você baixar.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <h3>Atendimento Híbrido Inteligente</h3>
+                    <p>Você ou sua equipe precisam intervir? Basta responder a mensagem. O bot detecta a intervenção humana e entra em modo "soneca", voltando a agir somente depois de um tempo, sem atrapalhar.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <h3>Controle Total do Horário</h3>
+                    <p>Configure facilmente os dias e horários em que o bot deve estar ativo. Fora desse período, ele pode informar que está indisponível ou simplesmente não responder.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Use Cases -->
+    <section class="use-cases">
+        <div class="container">
+            <h2 class="section-title">Perfeito para qualquer negócio que usa o WhatsApp.</h2>
+            <div class="use-cases-grid">
+                <div class="use-case">
+                    <h3>Lojas e E-commerces</h3>
+                    <p>Responde dúvidas sobre produtos, calcula frete, informa sobre status de pedidos e captura o contato de quem abandona o carrinho.</p>
+                </div>
+                <div class="use-case">
+                    <h3>Restaurantes e Deliveries</h3>
+                    <p>Envia o cardápio, anota pedidos simples, informa o horário de funcionamento e a área de entrega.</p>
+                </div>
+                <div class="use-case">
+                    <h3>Clínicas e Agendamentos</h3>
+                    <p>Verifica horários disponíveis, agenda consultas, envia lembretes e responde perguntas sobre procedimentos.</p>
+                </div>
+                <div class="use-case">
+                    <h3>Prestadores de Serviço</h3>
+                    <p>Faz a primeira triagem, qualifica o cliente com perguntas-chave e encaminha apenas os contatos mais promissores para um vendedor humano.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="pricing" id="pricing">
+        <div class="container">
+            <h2 class="section-title">Escolha o plano que acelera seu crescimento.</h2>
+            <div class="pricing-toggle">
+                <p>Garantia de 7 dias, se não gostar devolvemos o seu dinheiro.</p>
+                <div class="toggle-container">
+                    <button class="toggle-option" onclick="togglePricing('monthly')">Mensal</button>
+                    <button class="toggle-option active" onclick="togglePricing('annual')">Anual (Economize até 60%!)</button>
+                </div>
+            </div>
+            <div class="pricing-cards">
+                <div class="pricing-card">
+                    <div class="plan-name">Pro</div>
+                    <div class="plan-subtitle">Ideal para quem está começando e quer validar a ideia.</div>
+                    <div class="plan-price">R$83<span class="period">/mês</span></div>
+                    <div class="plan-total">total de R$ 997,00</div>
+                    <ul class="plan-features">
+                        <li>1 Assistente FacilChat</li>
+                        <li>Upload de até 3 arquivos</li>
+                        <li>Processa até 500 mensagens</li>
+                    </ul>
+                    <button class="pricing-cta">Escolher Plano</button>
+                </div>
+                <div class="pricing-card popular">
+                    <div class="popular-badge">🔥 Mais popular</div>
+                    <div class="plan-name">Elite</div>
+                    <div class="plan-subtitle">Para empresas que precisam de mais volume e funcionalidades.</div>
+                    <div class="plan-price">R$141<span class="period">/mês</span></div>
+                    <div class="plan-total">total de R$ 1.697,00</div>
+                    <ul class="plan-features">
+                        <li>Até 3 Assistentes FacilChat</li>
+                        <li>Upload de até 10 arquivos</li>
+                        <li>Processa até 3000 mensagens</li>
+                        <li>Permite Coleta de Leads</li>
+                    </ul>
+                    <button class="pricing-cta">Escolher Plano</button>
+                </div>
+                <div class="pricing-card empresarial">
+                    <div class="plan-name">Empresarial</div>
+                    <div class="plan-subtitle">Soluções personalizadas para grandes volumes.</div>
+                    <div class="plan-price">Sob consulta</div>
+                    <div class="plan-total"></div>
+                    <ul class="plan-features">
+                        <li>Assistentes ilimitados</li>
+                        <li>Uploads ilimitados</li>
+                        <li>Mensagens ilimitadas</li>
+                        <li>Suporte prioritário</li>
+                        <li>Integração personalizada</li>
+                    </ul>
+                    <button class="pricing-cta">Fale Conosco</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq">
+        <div class="container">
+            <h2 class="section-title">Ainda tem dúvidas? A gente responde.</h2>
+            <div class="faq-list">
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        É difícil de configurar? Preciso saber programar?
+                        <span class="faq-toggle">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        Não! O FacilChat foi feito para ser simples. Com nosso guia passo a passo, você cria e conecta seu bot em menos de 5 minutos, sem escrever uma única linha de código.
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        Funciona com o meu número de WhatsApp atual ou preciso de um novo?
+                        <span class="faq-toggle">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        Funciona perfeitamente com seu número atual, seja ele pessoal ou do WhatsApp Business. Não precisa contratar um número novo.
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        O que acontece se o bot não souber a resposta?
+                        <span class="faq-toggle">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        Você pode configurar contatos de encaminhamento. O bot pode fornecer o telefone de um setor específico ou você pode treinar o bot para dizer "Não sei a resposta, vou chamar um humano para te ajudar". Além disso, com nosso recurso de "Descanso Inteligente", a qualquer momento um humano pode assumir a conversa.
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        É seguro conectar meu WhatsApp?
+                        <span class="faq-toggle">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        Sim. Usamos a tecnologia por trás do WhatsApp Web para estabelecer a conexão, que é criptografada de ponta a ponta. Nós nunca temos acesso às suas credenciais.
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        Posso testar antes de assinar?
+                        <span class="faq-toggle">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        Claro! Oferecemos um teste gratuito de 3 dias com acesso a diversas funcionalidades para você ver o poder do FacilChat na prática.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- Final CTA -->
+    <section class="final-cta">
+        <div class="container">
+            <h2>Pare de deixar dinheiro na mesa.</h2>
+            <p>Automatize seu atendimento hoje mesmo e veja suas vendas e a satisfação dos seus clientes decolarem.</p>
+            <a href="#pricing" class="final-cta-btn">Quero meu assistente virtual grátis</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 FacilChat. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <script>
+        // FAQ Toggle functionality
+        function toggleFaq(button) {
+            const faqItem = button.parentElement;
+            const faqAnswer = faqItem.querySelector('.faq-answer');
+            
+            // Close all other FAQ items
+            document.querySelectorAll('.faq-item').forEach(item => {
+                if (item !== faqItem) {
+                    item.classList.remove('active');
+                    item.querySelector('.faq-answer').classList.remove('active');
+                }
+            });
+            
+            // Toggle current item
+            faqItem.classList.toggle('active');
+            faqAnswer.classList.toggle('active');
+        }
+
+        // Pricing toggle functionality
+        let isAnnual = true;
+        
+        function togglePricing(period) {
+            const buttons = document.querySelectorAll('.toggle-option');
+            const prices = document.querySelectorAll('.plan-price');
+            const totals = document.querySelectorAll('.plan-total');
+            
+            buttons.forEach(btn => btn.classList.remove('active'));
+            
+            if (period === 'annual') {
+                buttons[1].classList.add('active');
+                prices[0].innerHTML = 'R$83<span class="period">/mês</span>';
+                prices[1].innerHTML = 'R$141<span class="period">/mês</span>';
+                totals[0].textContent = 'total de R$ 997,00';
+                totals[1].textContent = 'total de R$ 1.697,00';
+                isAnnual = true;
+            } else {
+                buttons[0].classList.add('active');
+                prices[0].innerHTML = 'R$147<span class="period">/mês</span>';
+                prices[1].innerHTML = 'R$347<span class="period">/mês</span>';
+                totals[0].textContent = '';
+                totals[1].textContent = '';
+                isAnnual = false;
+            }
+        }
+
+        // Plan selection functions
+        function selectPlan(plan) {
+            console.log('Plano selecionado:', plan);
+            // Aqui você pode adicionar a lógica para redirecionar para o checkout
+            alert(`Você selecionou o plano ${plan.charAt(0).toUpperCase() + plan.slice(1)}!`);
+        }
+
+        function contactSales() {
+            console.log('Contatar vendas');
+            // Aqui você pode adicionar a lógica para contato com vendas
+            alert('Redirecionando para contato com vendas...');
+        }
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add scroll effect to header
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('.header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(15, 15, 35, 0.98)';
+            } else {
+                header.style.background = 'rgba(15, 15, 35, 0.95)';
+            }
+        });
+
+        // Animate cards on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all cards for animation
+        document.querySelectorAll('.problem-card, .feature-card, .use-case, .pricing-card, .step').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = 'all 0.6s ease';
+            observer.observe(card);
+        });
+
+        // Add floating animation to hero CTA
+        const heroCta = document.querySelector('.cta-primary');
+        if (heroCta) {
+            setInterval(() => {
+                heroCta.style.transform = 'translateY(-3px)';
+                setTimeout(() => {
+                    heroCta.style.transform = 'translateY(0)';
+                }, 1000);
+            }, 3000);
+        }
+
+        // Add particle effect to hero section
+        function createParticle() {
+            const hero = document.querySelector('.hero');
+            const particle = document.createElement('div');
+            
+            particle.style.position = 'absolute';
+            particle.style.width = '4px';
+            particle.style.height = '4px';
+            particle.style.background = 'rgba(139, 92, 246, 0.3)';
+            particle.style.borderRadius = '50%';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.top = '100%';
+            particle.style.pointerEvents = 'none';
+            particle.style.animation = 'float-up 6s linear forwards';
+            
+            hero.appendChild(particle);
+            
+            setTimeout(() => {
+                particle.remove();
+            }, 6000);
+        }
+
+        // Add CSS for particle animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes float-up {
+                0% {
+                    transform: translateY(0) scale(0);
+                    opacity: 1;
+                }
+                50% {
+                    opacity: 1;
+                    transform: scale(1);
+                }
+                100% {
+                    transform: translateY(-100vh) scale(0);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Create particles periodically
+        setInterval(createParticle, 800);
+
+        // Add typing effect to hero title
+        function typeWriter(element, text, speed = 100) {
+            let i = 0;
+            element.innerHTML = '';
+            
+            function type() {
+                if (i < text.length) {
+                    element.innerHTML += text.charAt(i);
+                    i++;
+                    setTimeout(type, speed);
+                }
+            }
+            type();
+        }
+
+        // Initialize typing effect when page loads
+        window.addEventListener('load', () => {
+            const heroTitle = document.querySelector('.hero h1');
+            const originalText = heroTitle.textContent;
+            typeWriter(heroTitle, originalText, 20);
+        });
+    </script>
+
+    <script src="https://www.gstatic.com/firebasejs/9.6.7/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.7/firebase-auth-compat.js"></script>
+    <script src="landing.js"></script>
+        
+</body>
+</html>
